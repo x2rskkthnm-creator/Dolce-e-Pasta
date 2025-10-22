@@ -1,0 +1,304 @@
+<!doctype html>
+
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PASTA E DOLCE — Plantilla editable</title>
+  <style>
+    :root{
+      --bg: #FFD9A6; /* pastel amarillo con tono naranja */
+      --card: rgba(255,255,255,0.06);
+      --accent: #ffffff;
+      --muted: #333;
+      --gap: 14px;
+      --square-size: 110px;
+    }html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+body{
+  background: linear-gradient(180deg,var(--bg), #FFE6B0 70%);
+  color:var(--muted);
+  display:flex;flex-direction:column;
+  min-height:100vh;padding:30px;
+  box-sizing:border-box;
+}
+
+/* logo box en la esquina */
+.logo-box{
+  position:fixed;left:20px;top:20px;
+  width:120px;height:120px;border-radius:10px;
+  background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);overflow:hidden;border:2px dashed rgba(255,255,255,0.15);
+}
+.logo-box img{width:100%;height:100%;object-fit:cover}
+.logo-placeholder{font-size:12px;color:rgba(255,255,255,0.8);text-align:center;padding:6px}
+
+header{padding-top:20px;padding-bottom:30px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+h1.title{margin:0;font-size:44px;color:var(--accent);letter-spacing:2px;text-shadow:0 2px 6px rgba(0,0,0,0.15)}
+
+.images-grid{max-width:1100px;margin:18px auto 8px auto;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap)}
+.img-card{background:rgba(255,255,255,0.18);height:140px;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;border:2px solid rgba(255,255,255,0.06)}
+.img-card img{width:100%;height:100%;object-fit:cover}
+.img-placeholder{font-size:13px;color:rgba(255,255,255,0.9);padding:8px;text-align:center}
+
+.prices{max-width:1100px;margin:18px auto;padding:16px;border-radius:12px;background:rgba(255,255,255,0.06);min-height:70px;box-shadow:0 6px 18px rgba(0,0,0,0.05)}
+.prices h2{margin:0 0 8px 0;color:var(--muted)}
+.prices .content{min-height:36px}
+
+footer{margin-top:auto;padding:18px 0 40px 0;display:flex;justify-content:center}
+.phone-box{width:100%;max-width:1100px;border-radius:12px;padding:12px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:space-between}
+.phone-box .label{font-weight:600}
+
+/* controls */
+.controls{position:fixed;right:20px;top:20px;display:flex;flex-direction:column;gap:10px}
+.controls button{background:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,0.08)}
+
+/* small responsive tweaks */
+@media (max-width:900px){
+  .images-grid{grid-template-columns:repeat(2,1fr)}
+  .logo-box{width:90px;height:90px}
+  h1.title{font-size:32px}
+}
+
+  </style>
+</head>
+<body>  <!-- cuadro para imagen de la empresa -->  <div class="logo-box" id="logoBox">
+    <div class="logo-placeholder" id="logoPlaceholder">Logo de la empresa\n(Clic para editar)</div>
+    <input type="file" accept="image/*" id="logoInput" style="display:none" />
+  </div>  <div class="controls">
+    <button id="editBtn">🔒 Editar</button>
+    <button id="saveBtn" style="display:none">💾 Guardar y descargar</button>
+    <button id="resetBtn">♻ Restaurar</button>
+  </div>  <header>
+    <h1 class="title" id="siteTitle">PASTA E DOLCE</h1>
+    <small style="color:rgba(0,0,0,0.35);margin-top:6px">Plantilla editable (cliente)</small>
+  </header>  <!-- grid 2 filas x 4 columnas (puede reducirse en responsive) -->  <section class="images-grid" id="imagesGrid">
+    <!-- 8 tarjetas -->
+    <div class="img-card" data-index="0"><div class="img-placeholder">Imagen 1</div><input type="file" accept="image/*" class="img-input" style="display:none"></div>
+    <div class="img-card" data-index="1"><div class="img-placeholder">Imagen 2</div><input type="file" accept="image/*" class="img-input" style="display:none"></div>
+    <div class="img-card" data-index="2"><div class="img-placeholder">Imagen 3</div><input type="file" accept="image/*" class="img-input" style="display:none"></div>
+    <div class="img-card" data-index="3"><div class="img-placeholder">Imagen 4</div><input type="file" accept="image/" class="img-input" style="display:none"></div><div class="img-card" data-index="4"><div class="img-placeholder">Imagen 5</div><input type="file" accept="image/" class="img-input" style="display:none"></div>
+<div class="img-card" data-index="5"><div class="img-placeholder">Imagen 6</div><input type="file" accept="image/*" class="img-input" style="display:none"></div>
+<div class="img-card" data-index="6"><div class="img-placeholder">Imagen 7</div><input type="file" accept="image/*" class="img-input" style="display:none"></div>
+<div class="img-card" data-index="7"><div class="img-placeholder">Imagen 8</div><input type="file" accept="image/*" class="img-input" style="display:none"></div>
+
+  </section>  <!-- precios -->  <section class="prices" id="pricesSection">
+    <h2 contenteditable="false" id="pricesTitle">Precios</h2>
+    <div class="content" id="pricesContent" contenteditable="false">Aquí puedes poner la lista de precios, por ejemplo: "Spaghetti - $500", "Ravioli - $700". (Haz click en editar para modificar)</div>
+  </section>  <!-- pie inferior con teléfono -->  <footer>
+    <div class="phone-box">
+      <div>
+        <div class="label">Contacto</div>
+        <div id="phoneNumber" contenteditable="false">+54 9 351 123 4567</div>
+      </div>
+      <div style="opacity:0.6;font-size:12px">Horario de atención: Lun-Vie 9:00 - 18:00</div>
+    </div>
+  </footer>  <script>
+    // Contraseña que solicitó el usuario
+    const PASSWORD = '1983_H_L_C_A';
+
+    const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const siteTitle = document.getElementById('siteTitle');
+    const pricesTitle = document.getElementById('pricesTitle');
+    const pricesContent = document.getElementById('pricesContent');
+    const phoneNumber = document.getElementById('phoneNumber');
+
+    const logoBox = document.getElementById('logoBox');
+    const logoInput = document.getElementById('logoInput');
+    const logoPlaceholder = document.getElementById('logoPlaceholder');
+
+    let editMode = false;
+
+    // Imágenes de la grid
+    const imgCards = document.querySelectorAll('.img-card');
+
+    function askPassword(){
+      return prompt('Introduce la contraseña para editar:') || '';
+    }
+
+    function toggleEdit(on){
+      editMode = !!on;
+      if(editMode){
+        // habilitar contenteditable
+        siteTitle.contentEditable = true;
+        pricesTitle.contentEditable = true;
+        pricesContent.contentEditable = true;
+        phoneNumber.contentEditable = true;
+        editBtn.textContent = '🔓 Bloquear';
+        saveBtn.style.display = 'inline-block';
+
+        // mostrar inputs de imagen
+        imgCards.forEach(card => {
+          const inp = card.querySelector('.img-input');
+          inp.style.display = 'block';
+        });
+
+        // logo
+        logoPlaceholder.textContent = 'Logo: Cargar imagen (clic)';
+      } else {
+        siteTitle.contentEditable = false;
+        pricesTitle.contentEditable = false;
+        pricesContent.contentEditable = false;
+        phoneNumber.contentEditable = false;
+        editBtn.textContent = '🔒 Editar';
+        saveBtn.style.display = 'none';
+
+        imgCards.forEach(card => {
+          const inp = card.querySelector('.img-input');
+          inp.style.display = 'none';
+        });
+
+        if(!logoBox.querySelector('img')) logoPlaceholder.textContent = 'Logo de la empresa\n(Clic para editar)';
+      }
+    }
+
+    editBtn.addEventListener('click', ()=>{
+      if(!editMode){
+        const p = askPassword();
+        if(p === PASSWORD){
+          toggleEdit(true);
+          alert('Modo edición activado.');
+        } else {
+          alert('Contraseña incorrecta.');
+        }
+      } else {
+        // bloquear sin pedir contraseña
+        toggleEdit(false);
+        alert('Edición bloqueada.');
+      }
+    });
+
+    // guardar: descargar HTML con cambios y además guardar en localStorage
+    saveBtn.addEventListener('click', ()=>{
+      // guardar en localStorage
+      const state = captureState();
+      localStorage.setItem('pasta_e_dolce_state', JSON.stringify(state));
+
+      // crear blob y descargar el HTML actual
+      const doctype = '<!doctype html>';
+      const html = doctype + '\n' + document.documentElement.outerHTML;
+      const blob = new Blob([html], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'pasta_e_dolce_editada.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      alert('Se ha descargado el archivo y guardado en el navegador.');
+    });
+
+    // Restaurar plantilla original (limpia)
+    resetBtn.addEventListener('click', ()=>{
+      if(confirm('¿Restaurar la plantilla a su estado original? Se perderán los cambios no guardados.')){
+        localStorage.removeItem('pasta_e_dolce_state');
+        location.reload();
+      }
+    });
+
+    // manejo de carga de logo
+    logoBox.addEventListener('click', ()=>{
+      if(!editMode) return;
+      logoInput.click();
+    });
+    logoInput.addEventListener('change', (e)=>{
+      const f = e.target.files[0]; if(!f) return;
+      const r = new FileReader();
+      r.onload = ev => {
+        // reemplaza placeholder por imagen
+        logoBox.innerHTML = '';
+        const img = document.createElement('img'); img.src = ev.target.result; img.alt = 'Logo';
+        logoBox.appendChild(img);
+        // mantener input to update later
+        const newInp = document.createElement('input'); newInp.type='file';newInp.accept='image/*';newInp.style.display='none';newInp.addEventListener('change', logoInputChange);
+        logoBox.appendChild(newInp);
+      };
+      r.readAsDataURL(f);
+    });
+    function logoInputChange(e){
+      const f = e.target.files[0]; if(!f) return;
+      const r = new FileReader();
+      r.onload = ev => {
+        const img = logoBox.querySelector('img'); if(img) img.src = ev.target.result;
+      };
+      r.readAsDataURL(f);
+    }
+
+    // manejo inputs de cada tarjeta
+    imgCards.forEach(card => {
+      const idx = card.dataset.index;
+      const inp = card.querySelector('.img-input');
+      inp.addEventListener('change', (ev)=>{
+        const f = ev.target.files[0]; if(!f) return;
+        const r = new FileReader();
+        r.onload = e => {
+          // poner imagen dentro de la tarjeta
+          card.innerHTML = '';
+          const img = document.createElement('img'); img.src = e.target.result; img.alt = 'Producto ' + (parseInt(idx)+1);
+          card.appendChild(img);
+
+          // volver a añadir input para futuras ediciones
+          const newInp = document.createElement('input'); newInp.type='file'; newInp.accept='image/*'; newInp.className='img-input'; newInp.style.display = editMode ? 'block' : 'none';
+          newInp.addEventListener('change', (ev2)=>{
+            const f2 = ev2.target.files[0]; if(!f2) return; const r2 = new FileReader(); r2.onload = e2 => {img.src = e2.target.result}; r2.readAsDataURL(f2);
+          });
+          card.appendChild(newInp);
+        };
+        r.readAsDataURL(f);
+      });
+
+      // también permitir click en tarjeta para elegir imagen si en modo edición
+      card.addEventListener('click', ()=>{ if(editMode){ const inp = card.querySelector('.img-input'); if(inp) inp.click(); }});
+    });
+
+    // captura un estado simple del documento para guardar en localStorage
+    function captureState(){
+      const imgs = [];
+      document.querySelectorAll('.img-card img').forEach(img => imgs.push(img.src));
+      const logoImg = logoBox.querySelector('img') ? logoBox.querySelector('img').src : null;
+      return {
+        title: siteTitle.innerText,
+        pricesTitle: pricesTitle.innerText,
+        pricesContent: pricesContent.innerHTML,
+        phone: phoneNumber.innerText,
+        images: imgs,
+        logo: logoImg
+      };
+    }
+
+    // restaurar estado desde localStorage si existe
+    function restoreState(){
+      try{
+        const raw = localStorage.getItem('pasta_e_dolce_state');
+        if(!raw) return;
+        const state = JSON.parse(raw);
+        if(state.title) siteTitle.innerText = state.title;
+        if(state.pricesTitle) pricesTitle.innerText = state.pricesTitle;
+        if(state.pricesContent) pricesContent.innerHTML = state.pricesContent;
+        if(state.phone) phoneNumber.innerText = state.phone;
+        if(state.logo){
+          logoBox.innerHTML=''; const img = document.createElement('img'); img.src = state.logo; logoBox.appendChild(img);
+        }
+        // imágenes
+        const imgs = state.images || [];
+        const cards = document.querySelectorAll('.img-card');
+        cards.forEach((card,i)=>{
+          if(imgs[i]){
+            card.innerHTML=''; const img = document.createElement('img'); img.src = imgs[i]; card.appendChild(img);
+            const newInp = document.createElement('input'); newInp.type='file'; newInp.accept='image/*'; newInp.className='img-input'; newInp.style.display = editMode ? 'block' : 'none'; newInp.addEventListener('change', (ev2)=>{ const f2 = ev2.target.files[0]; if(!f2) return; const r2 = new FileReader(); r2.onload = e2 => {img.src = e2.target.result}; r2.readAsDataURL(f2); });
+            card.appendChild(newInp);
+          }
+        });
+
+      } catch(e){console.warn('No se pudo restaurar el estado:', e)}
+    }
+
+    // al cargar, restaurar
+    restoreState();
+    toggleEdit(false);
+
+    // ayuda para descargar el HTML limpio (si el usuario quiere)
+    // NOTA: la descarga creada incluye la app tal como está en ese momento y es una copia.
+
+  </script></body>
+</html>
